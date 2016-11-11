@@ -2,11 +2,11 @@ import numpy as np
 
 
 # Read csv file of History transactions and create history dictionnary
-lines = np.genfromtxt("./paymo_input/batch_payment.txt", delimiter=",", dtype=None)
+lines = np.genfromtxt("./paymo_input/batch_payment.txt", delimiter=",", dtype=None,usecols = (0, 1, 2), comments='@@@s$&$*$#*%&*%$$*')
 my_dict_hist = dict()
 
 # Read csv file of future transactions and create dictionnary    
-lines2 = np.genfromtxt("./paymo_input/stream_payment.txt", delimiter=",", dtype=None, comments='@@@')
+lines2 = np.genfromtxt("./paymo_input/stream_payment.txt", delimiter=",", dtype=None,usecols = (0, 1, 2), comments='@@@s$&$*$#*%&*%$$*')
 my_dict_trans = dict()
 
 # Load dictionnary of Id's with corresponding transactions friends list based on previous transactions
@@ -154,20 +154,14 @@ def feature4(id1, id2):
     
 # Loop thru transaction dict and output to file 1 (feature 1)
 fw = open('./paymo_output/output1.txt', 'w')
-for key in my_dict_trans:
-    fw.write(feature1(key, my_dict_trans[key]) + '\n')
-fw.close()
-
-# Loop thru transaction dict and output to file 2 (feature 2)
 fw2 = open('./paymo_output/output2.txt', 'w')
-for key in my_dict_trans:
-    fw2.write(feature2(key, my_dict_trans[key]) + '\n')
-fw2.close()
-
-# Loop thru transaction dict and output to file 3 (feature 3)
 fw3 = open('./paymo_output/output3.txt', 'w')
 for key in my_dict_trans:
+    fw.write(feature1(key, my_dict_trans[key]) + '\n')
+    fw2.write(feature2(key, my_dict_trans[key]) + '\n')
     fw3.write(feature4(key, my_dict_trans[key]) + '\n')
+fw.close()
+fw2.close()
 fw3.close()
     
         

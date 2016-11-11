@@ -1,8 +1,7 @@
 import numpy as np
 
 
-# Read csv file of History transactions and create history dictionnary    
-#lines = np.genfromtxt("/Users/yvesbell/Documents/digital-wallet/paymo_input/batch_payment.txt", delimiter=",", dtype=None)
+# Read csv file of History transactions and create history dictionnary
 lines = np.genfromtxt("./paymo_input/batch_payment.txt", delimiter=",", dtype=None)
 my_dict_hist = dict()
 
@@ -10,7 +9,7 @@ my_dict_hist = dict()
 lines2 = np.genfromtxt("./paymo_input/stream_payment.txt", delimiter=",", dtype=None, comments='@@@')
 my_dict_trans = dict()
 
-# Load dictionnary of Id's with corresponding transactions friends list
+# Load dictionnary of Id's with corresponding transactions friends list based on previous transactions
 for i in range(len(lines)):
     if i == 0:
         continue
@@ -40,7 +39,7 @@ def returnFriends(id):
             break
     return friendslist
     
-# return extended friends list
+# return extended friends list, the complete list of whom you made and received transactions
 def returnExtendedFriends(id):
     friendslist = returnFriends(id)
     Extended_friendslist = returnFriends(id)
@@ -69,7 +68,7 @@ def returnExtendedFriends_degree3(id):
     return Extended_friendslist
     
 
-# return extended friends Degree4
+# return extended friends Degree4, the complete list of your 4th degree friends
 def returnExtendedFriends_degree4(id):
     friendslist = returnExtendedFriends_degree3(id)
     Extended_friendslist = returnExtendedFriends_degree3(id)
@@ -117,7 +116,7 @@ def feature2(id1, id2):
                 result = 'unverified'
     return result
     
-# Feature 3
+# Feature 2.9, needed to create the next degree
 def feature3(id1, id2):
     result = 'unverified'
     Extended_friendslist1 = returnExtendedFriends_degree3(id1)
@@ -135,7 +134,7 @@ def feature3(id1, id2):
                 result = 'unverified'
     return result
     
-# Feature 4
+# Feature 3
 def feature4(id1, id2):
     result = 'unverified'
     Extended_friendslist1 = returnExtendedFriends_degree4(id1)
